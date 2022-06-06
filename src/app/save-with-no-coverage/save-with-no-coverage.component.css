@@ -1,0 +1,212 @@
+.headerCss
+{
+    position:absolute;
+    left:12.97%;
+    right:55.31%;
+    top:39.86%;
+    bottom:40.42%;
+    
+    font-family:'CVS Health Sans';
+    font-style:normal;
+    font-weight:400;
+    font-size:14px;
+    line-height:18px;
+    /* or 129% */
+    
+    color:#333333;
+    
+    
+    
+    
+    
+}
+
+
+/* How cash discounts work */
+
+.howCashdiscountworks
+{
+
+    width: 382px;
+    height: 18px;
+    
+    font-family:'CVS Health Sans';
+    font-style: normal;
+    font-weight:500;
+    font-size:12px;
+    line-height:150%;
+    color:#CC0000;
+
+    /* identical to box height, or 18px */
+
+/* Theme/Action (Emphasized) */
+
+
+
+/* Inside auto layout */
+flex:none;
+order:1;
+flex-grow:1;
+
+
+}
+
+
+
+
+
+/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam iaculis, orci placerat volutpat ornare. */
+.howItWorksTextCss
+{
+
+    width:378px;
+    height:36px;
+    
+    font-family:'CVS Health Sans';
+    font-style:normal;
+    font-weight:400;
+    font-size:12px;
+    line-height:150%;
+    /* or 18px */
+    
+    /* Theme/Text (Default) */
+    
+
+/* Inside auto layout */
+flex:none;
+order:1;
+flex-grow:1;    
+}
+.howItWorksTextBlackCss
+{
+    color:#262626 !important;
+}
+
+.howItWorksTextRedCss
+{
+    color:red !important;
+}
+
+
+
+
+.drugName
+{
+    /* Drug name */
+
+
+    width:328px;
+    height:24px;
+    
+    /* Desktop/Paragraph/M (Strong) */
+    font-family:'CVS Health Sans';
+    font-style:normal;
+    font-weight:500;
+    font-size:16px;
+    line-height:150%;
+    /* identical to box height, or 24px */
+    
+    /* Theme/Text (Default) */
+    color:#262626;
+    
+    
+    /* Inside auto layout */
+    flex:none;
+    order:0;
+    flex-grow:0;
+    
+}
+
+
+
+.inputField{
+
+/* TextBox */
+/* _Input Field */
+
+box-sizing:border-box;
+
+/* Auto layout */
+/* display:flex;
+flex-direction:column;
+align-items:flex-start; */
+padding:10px 8px;
+
+width:286px;
+height:44px;
+
+/* Color Ramp/Neutral/0 */
+background:#FFFFFF;
+/* Theme/Border (Interactive) */
+border:1px solid #262626;
+border-radius:10px;
+
+/* Inside auto layout */
+flex:none;
+order:2;
+align-self:stretch;
+flex-grow:0;
+
+
+}
+
+
+/* InputField Hint */
+
+.inputFieldHint
+{
+    /* position:absolute;
+    left:50.94%;
+    right:29.06%;
+    top:40.83%;
+    bottom:56.67%; */
+    
+    font-family:'CVS Health Sans';
+    font-style:normal;
+    font-weight:400;
+    font-size:16px;
+    line-height:18px;
+    /* identical to box height, or 112% */
+    color:#767676;
+
+    
+}
+/* Lorem ipsum dolor si */
+
+
+.arrow-up
+{
+    position: relative;
+    display:inline;
+    top: 5px;
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 0.2em solid red;
+    border-top: 0.2em solid red;
+    transform: rotate(-45deg);
+    margin-right: 0.5em;
+    margin-left: 1.0em;
+ 
+}
+
+
+
+.arrow-down {
+    position: relative;
+    display:inline;
+    top: 0px;
+    content: "";
+    display: inline-block;
+    width: 10px;
+    margin-right:10px;
+    height: 10px;
+    border-right: 0.2em solid black;
+    border-top: 0.2em solid black;
+    transform: rotate(135deg);
+    margin-right: 0.5em;
+    margin-left: 1.0em;
+  
+    }
+    
