@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { filter, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-save-with-no-coverage',
@@ -14,10 +15,18 @@ export class SaveWithNoCoverageComponent implements OnInit {
   searchDrugNameResponse: any = [];
   drugName: string = '';
 
-  hideZipCode: boolean = false;
+  showLoader: boolean = false;
+
+  hideZipCode: boolean = true;
+
+  showAutocomplete: boolean = false;
+
+  noSearchItem: boolean = false;
 
 
   zipCode: string = '';
+
+  isSelectedDrug: boolean = false;
 
   selectedDrug: string = '';
 
@@ -29,54 +38,92 @@ export class SaveWithNoCoverageComponent implements OnInit {
     this.hidePanel = !this.hidePanel
   }
   drugSelection(drugName: string) {
-    console.log(drugName);
 
     this.drugName = drugName;
-    this.hideAutoComplete = true;
-    this.hideZipCode = true;
+    this.showAutocomplete = false;
+    this.searchResponse = {};
+    this.searchDrugNameResponse = [];
+    this.showLoader = false;
+    this.hideZipCode = false;
+    this.isSelectedDrug = true;
   }
 
-  searchDrugName($event: any) {
-    this.hideZipCode = false;
-    console.log(this.drugName)
-    this.hideAutoComplete = true;
-    if ($event.target.value.length > 2) {
+  clearInput() {
+    this.isSelectedDrug = false;
+    this.drugName = '';
+    this.hideZipCode = true;
 
-      var request = {
-        "requestMetaData":
+  }
+
+
+  getDrugNames($event: any) {
+    this.showLoader = false;
+    this.showAutocomplete = false;
+    this.hideZipCode = true;
+    this.noSearchItem = false;
+
+
+
+    if ($event.target.value.length > 1) {
+      this.showLoader = true;
+    }
+    else {
+      return;
+    }
+
+
+    var request = {
+      "requestMetaData":
+      {
+        "appName": "ICE_WEB",
+        "channelName": "WEB",
+        "deviceType": "DESKTOP",
+        "deviceToken": "7777",
+        "lineOfBusiness": "ICE",
+        "apiKey": "c69e906f-5c23-4be8-be73-d43527cece5b",
+        "source": "ICE_WEB",
+        "securityType": "apiKey",
+        "responseFormat": "JSON",
+        "newPattern": true,
+        "type": "inode"
+      },
+      "requestPayloadData":
+      {
+        "drugSearchCriteria":
         {
-          "appName": "ICE_WEB",
-          "channelName": "WEB",
-          "deviceType": "DESKTOP",
-          "deviceToken": "7777",
-          "lineOfBusiness": "ICE",
-          "apiKey": "c69e906f-5c23-4be8-be73-d43527cece5b",
-          "source": "ICE_WEB",
-          "securityType": "apiKey",
-          "responseFormat": "JSON",
-          "newPattern": true,
-          "type": "inode"
-        },
-        "requestPayloadData":
-        {
-          "drugSearchCriteria":
-          {
-            "drugName": "lip",
-            "maxMatches": 70
-          }
+          "drugName": $event.target.value,
+          "maxMatches": 70
         }
       }
+    }
 
-      this.http.post("https://www-qa2.cvs.com/Services/ICEAGPV1/drugInfo/1.0.0/findDrugByName", request).subscribe((result: any) => {
-
+    this.http.post("https://www-qa2.cvs.com/Services/ICEAGPV1/drugInfo/1.0.0/findDrugByName", request)
+      
+      .subscribe((result: any) => {
+       
         this.searchResponse = result;
         this.searchDrugNameResponse = result.responsePayloadData.findDrugResponseList;
-        console.info(this.searchDrugNameResponse);
-        this.hideAutoComplete = false;
+       
+        if (this.searchDrugNameResponse.length > 0)
+        {
+                  this.showAutocomplete = true;
+
+        }
+      
+        else {
+          this.noSearchItem = true;
+          this.showAutocomplete = false;
+
+          this.showLoader = false;
+
+
+        }
+
+        //console.log(result);
 
       })
 
-    }
+
   }
 
 }

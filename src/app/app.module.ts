@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,8 @@ import { SaveWithNoCoverageModule } from './save-with-no-coverage/save-with-no-c
     AppRoutingModule,
     SaveWithNoCoverageModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AutocompleteLibModule
   ],
   providers: [],
   bootstrap: [AppComponent]

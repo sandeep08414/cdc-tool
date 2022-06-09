@@ -1,10 +1,132 @@
+<div class="row" style="margin:20px;">
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-3">
+                <div style="margin-top:30px;">
+                    <img height="120" width=130 src="./assets/images/CVS_Pictogram.png" />
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div style="margin-top:15px;">
+                    <span style="font-weight:bold;font-size:18pt;">
+                        Find Cash savings for a medication
+                    </span>
+                    <br />
+                    <span>Provide the drug you need and the CVS pharmacy you plan to pick up your
+                        prescription from - it's that easy. Then you'll let you- know the savings you're eligible for
+                    </span>
+                    <br />
+                    <div style="margin-top:15px;">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td style="vertical-align: top;">
+                                        <div (click)=showHide();
+                                            [ngClass]="{'arrow-up' : hidePanel ,'arrow-down' : !hidePanel}"
+                                            style="display:inline-block !important; "></div>
+                                    </td>
+                                    <td>
+                                        <div (click)=showHide();
+                                            [ngClass]="{'howItWorksTextCss': true ,'howItWorksTextBlackCss' : !hidePanel,'howItWorksTextRedCss' : hidePanel}"
+                                            style="display: inline-block !important;">
+                                            How Cash discount works
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                        </div>
+
+                        <div style="display: inline-block;">
+                            <div *ngIf="hidePanel" style="margin-left:25px;margin-top:10px;">Cash discount works
+                                description
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div style="margin-top:15px;margin-bottom:15px;"> <span>Drug name</span>
+        </div>
+
+        <div class="input-group" style="border:2px solid #bbb;z-index:10001;"
+            [ngClass]="{'inputErrorBorderCss' :noSearchItem,'inputBorderCss' : !noSearchItem }">
+            <input type="text" class="form-control inputTxtCss" (keyup)="getDrugNames($event)" [(ngModel)]="drugName"
+                style="padding:15px;outline:none !important;border:none !important;z-index:10;outline-width: 0;"
+                placeholder="Enter drug name to find savings">
+            <div class="input-group-append" style="border:none !important;z-index:11;">
+                <span class="input-group-text"
+                    style="background:white;padding:15px;border:none !important;width:50px;height:100%;">
+                    <div *ngIf="!isSelectedDrug">
+                        <img *ngIf="!showLoader" style="width:100%" src="assets/images/search.svg" />
+                        <div *ngIf="showLoader" class="spinner-border spinner-border-sm" style="color:rgb(204,0,0);"
+                            role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isSelectedDrug" (click)="clearInput()" style="cursor:pointer;"> X </div>
+
+
+                </span>
+            </div>
+        </div>
+        <div style="margin-top:-10px;min-height:200px;overflow-y: auto;z-index:1000;" *ngIf="showAutocomplete">
+            <ul class="autocompleteCss">
+                <li style="padding:0px !important">&nbsp;
+                </li>
+                <li *ngFor="let drug of searchDrugNameResponse">
+                    <a (click)="drugSelection(drug.labelName)" style="display:block;"> {{drug.labelName}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!showAutocomplete" style="margin-top:15px;margin-bottom:15px; color:#767676;">
+            <span>Eg:Liptor
+            </span>
+        </div>
+        <div *ngIf="!hideZipCode">
+            <div style="margin-top:15px;margin-bottom:15px;"> <span>Zip code</span>
+            </div>
+
+            <div class="input-group" style="border:2px solid #bbb;z-index:10001;">
+
+                <input type="text" class="form-control inputTxtCss" [(ngModel)]="zipCode"
+                    style="padding:15px;outline:none !important;border:none !important;" placeholder="Enter zip code">
+            </div>
+            <div style="margin-top:15px;margin-bottom:15px;color:#767676;"> <span>Eg:60002
+                </span>
+            </div>
+
+
+        </div>
+        <div *ngIf="!hideZipCode">
+
+            <button class="btnCss">Find my discount</button>
+        </div>
+
+
+
+    </div>
+
+</div>
+<br />
+<br />
+
+<!-- 
+
 <div style="font-family: Calibri">
     <table style="width:70%;border:1px solid grey;">
         <tr>
             <td style="vertical-align: top;">
-                <div style="margin-top:30px;">
-                    <img height="120" width=130 src="./assets/images/CVS_Pictogram.png" />
-                </div>
+
 
             </td>
             <td style="vertical-align: top;padding:20px;">
@@ -28,40 +150,46 @@
             <td style="vertical-align: top;">
                 <div style="width:100%;padding:20px;">
                     <p class="drugName">Drug name</p>
-                    <input type='text' placeholder="Enter drug name to find savings" [(ngModel)]="drugName"  (keyup)="searchDrugName($event)"
-                        class="inputField" style="width:90%;" /> 
-                         <p class="inputFieldHint" style="position:absolute">
-                            Eg:Liptor
-                        </p> 
+                    <input type='text' placeholder="Enter drug name to find savings" (keyup)="searchDrugName($event)"
+                        class="inputField" style="width:90%;" />
+                    <p class="inputFieldHint" style="position:absolute">
+                        Eg:Liptor
+                    </p>
 
-                        <br/> <br/>
+                    <br /> <br />
 
-                        <div *ngIf="hideZipCode">
-                            <p class="drugName">Zip code</p>
-                            <input type='text' placeholder="Enter your zip code" [(ngModel)]="zipCode"  (keyup)="searchDrugName($event)"
-                            class="inputField" style="width:90%;" /> 
-                            <p class="inputFieldHint" >
-                                Eg:60062
-                            </p> 
-                            <button style="background: #c00;padding:9px;color:white;font-weight:bold;outline:none !important;border:none;">Find my discount</button>
-    
-                        </div>       
+                    <div *ngIf="hideZipCode">
+                        <p class="drugName">Zip code</p>
+                        <input type='text' placeholder="Enter your zip code" [(ngModel)]="zipCode"
+                            (keyup)="searchDrugName($event)" class="inputField" style="width:90%;" />
+                        <p class="inputFieldHint">
+                            Eg:60062
+                        </p>
+                        <button
+                            style="background: #c00;padding:9px;color:white;font-weight:bold;outline:none !important;border:none;">Find
+                            my discount</button>
 
-        
-                    <div *ngIf="!hideAutoComplete" style="width:100%;height:200px;border-radius:20px;overflow-y: auto;background:rgb(236, 235, 235);z-index:9999;">
+                    </div>
+
+
+                    <div *ngIf="!hideAutoComplete"
+                        style="width:100%;height:200px;border-radius:20px;overflow-y: auto;background:rgb(236, 235, 235);z-index:9999;">
                         <ul style="width:100%;padding:0px;">
-                            <li  style="margin-left:0px ! important ;cursor:pointer; list-style: none;border-bottom:1px solid lightgrey;padding:10px;" *ngFor="let drug of searchDrugNameResponse">
-                                <a (click)="drugSelection(drug.labelName)" style="display:block;" >  {{drug.labelName}}
+                            <li style="margin-left:0px ! important ;cursor:pointer; list-style: none;border-bottom:1px solid lightgrey;padding:10px;"
+                                *ngFor="let drug of searchDrugNameResponse">
+                                <a (click)="drugSelection(drug.labelName)" style="display:block;"> {{drug.labelName}}
                                 </a>
-                              
+
                             </li>
                         </ul>
-                    </div>    
+                    </div>
                 </div>
-              
-              
+                <select class="dropDownCss">
+                    <option class="dropDownSelectCss">A</option>
+                </select>
+
             </td>
         </tr>
     </table>
-    <br/><br/>
-</div>
+    <br /><br />
+</div> -->
